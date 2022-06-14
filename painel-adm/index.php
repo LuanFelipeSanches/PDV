@@ -31,9 +31,9 @@ $menu2 = 'usuario';
                         <a class="nav-link active" aria-current="page" href="index.php?pagina=<?php echo $menu1 ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Usuários</a>
+                        <a class="nav-link" href="index.php?pagina=<?php echo $menu2 ?> ">Usuários</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class=" nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Dropdown
                         </a>
@@ -72,7 +72,15 @@ $menu2 = 'usuario';
     </nav>
 
     <div class="container-fluid mt-2">
-
+        <?php
+        if (@$_GET['pagina'] == $menu1) {
+            require_once($menu1 . '.php');
+        } else if (@$_GET['pagina'] == $menu2) {
+            require_once($menu2 . '.php');
+        } else {
+            require_once($menu1 . '.php');
+        }
+        ?>
     </div>
 </body>
 
