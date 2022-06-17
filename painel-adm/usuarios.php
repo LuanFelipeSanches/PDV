@@ -1,6 +1,31 @@
 <?php
 $pag = 'usuarios';
 ?>
+<div style="margin-right: 25px;">
+<table id="example" class="table table-hover mx-2">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Tiger Nixon</td>
+            <td>System Architect</td>
+
+        </tr>
+        <tr>
+            <td>Tiger Nixon</td>
+            <td>System Architect</td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+</div>
 
 <a href="index.php?pagina=<?php echo $pag ?>&funcao=novo" type="button" class="btn btn-secondary mt-2">Novo Usuário</a>
 
@@ -48,7 +73,7 @@ $pag = 'usuarios';
                     </div>
                     <small class="mt-1">
                         <div align="center" id="mensagem">
-                           
+
                         </div>
                     </small>
                 </div>
@@ -75,8 +100,8 @@ if (@$_GET['funcao'] == "novo") { ?>
 
 <!--AJAX PARA INSERÇÃO E EDIÇÃO DOS DADOS COM IMAGEM -->
 <script type="text/javascript">
-    $("#form").submit(function () {
-        var pag = "<?=$pag?>";
+    $("#form").submit(function() {
+        var pag = "<?= $pag ?>";
         event.preventDefault();
         var formData = new FormData(this);
 
@@ -85,7 +110,7 @@ if (@$_GET['funcao'] == "novo") { ?>
             type: 'POST',
             data: formData,
 
-            success: function (mensagem) {
+            success: function(mensagem) {
 
                 $('#mensagem').removeClass()
 
@@ -94,7 +119,7 @@ if (@$_GET['funcao'] == "novo") { ?>
                     //$('#nome').val('');
                     //$('#cpf').val('');
                     $('#btn-fechar').click();
-                 //   window.location = "index.php?pag="+pag;
+                    //   window.location = "index.php?pag="+pag;
 
                 } else {
 
@@ -108,10 +133,10 @@ if (@$_GET['funcao'] == "novo") { ?>
             cache: false,
             contentType: false,
             processData: false,
-            xhr: function () {  // Custom XMLHttpRequest
+            xhr: function() { // Custom XMLHttpRequest
                 var myXhr = $.ajaxSettings.xhr();
                 if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
-                    myXhr.upload.addEventListener('progress', function () {
+                    myXhr.upload.addEventListener('progress', function() {
                         /* faz alguma coisa durante o progresso do upload */
                     }, false);
                 }
@@ -121,3 +146,11 @@ if (@$_GET['funcao'] == "novo") { ?>
     });
 </script>
 
+
+<script type="text/javascript">
+$('#example').dataTable({
+     "ordering": false
+})
+
+ 
+</script>
