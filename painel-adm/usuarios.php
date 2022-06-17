@@ -1,35 +1,56 @@
 <?php
 $pag = 'usuarios';
+require_once('../conexao.php');
 ?>
-<div style="margin-right: 25px;">
-<table id="example" class="table table-hover mx-2">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
 
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-
-        </tr>
-        <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-
-        </tr>
-
-    </tbody>
-
-</table>
-</div>
 
 <a href="index.php?pagina=<?php echo $pag ?>&funcao=novo" type="button" class="btn btn-secondary mt-2">Novo Usuário</a>
 
+<div class="mt-4" style="margin-right: 25px;">
+    <?php
+    $query = $pdo->query("SELECT * FROM usuarios");
+    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+    $total_reg = @count($res);
+    if ( $total_reg > 0) {
+    ?>
+        <table id="example" class="table table-hover my-4">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Email</th>
+                    <th>Senha</th>
+                    <th>Nível</th>
+                    <th>Ação</th>
 
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                //For para percorrer dados na tabela do banco
+                for ($i = 0; $i < $total_reg; $i++) {
+                    foreach ($res[$i] as $key => $value) {
+                    }
+              
+                ?>
+                <tr>
+                    <td><?php echo $res[$i]['nome']?></td>
+                    <td><?php echo $res[$i]['cpf']?></td>
+                    <td><?php echo $res[$i]['email']?></td>
+                    <td><?php echo $res[$i]['senha']?></td>
+                    <td><?php echo $res[$i]['nivel']?></td>
+                    <td></td>
+                    
+
+                </tr>
+                <?php  } ?>
+            </tbody>
+
+        </table>
+    <?php } else {
+        echo '<p>Não existem dados para serem exibidos</p>';
+    } ?>
+</div>
 <div class="modal" tabindex="-1" id="modalCadastrar">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -148,9 +169,7 @@ if (@$_GET['funcao'] == "novo") { ?>
 
 
 <script type="text/javascript">
-$('#example').dataTable({
-     "ordering": false
-})
-
- 
+    $('#example').dataTable({
+        "ordering": false
+    })
 </script>
