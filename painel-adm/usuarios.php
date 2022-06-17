@@ -8,7 +8,7 @@ require_once('../conexao.php');
 
 <div class="mt-4" style="margin-right: 25px;">
     <?php
-    $query = $pdo->query("SELECT * FROM usuarios");
+    $query = $pdo->query("SELECT * FROM usuarios ORDER BY id DESC");
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
     $total_reg = @count($res);
     if ( $total_reg > 0) {
@@ -39,7 +39,7 @@ require_once('../conexao.php');
                     <td><?php echo $res[$i]['email']?></td>
                     <td><?php echo $res[$i]['senha']?></td>
                     <td><?php echo $res[$i]['nivel']?></td>
-                    <td></td>
+                    <td><i class="bi bi-pencil-square"></i></td>
                     
 
                 </tr>
