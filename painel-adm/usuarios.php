@@ -7,58 +7,87 @@ require_once('../conexao.php');
 <a href="index.php?pagina=<?php echo $pag ?>&funcao=novo" type="button" class="btn btn-secondary mt-2">Novo Usuário</a>
 
 <div class="mt-4" style="margin-right: 25px;">
+  
     <?php
+      //BUSCAR
     $query = $pdo->query("SELECT * FROM usuarios ORDER BY id DESC");
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
     $total_reg = @count($res);
-    if ( $total_reg > 0) {
+    if ($total_reg > 0) {
     ?>
-     <small>
-        <table id="example" class="table table-hover my-4">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>CPF</th>
-                    <th>Email</th>
-                    <th>Senha</th>
-                    <th>Nível</th>
-                    <th>Ação</th>
+        <small>
+            <table id="example" class="table table-hover my-4">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Email</th>
+                        <th>Senha</th>
+                        <th>Nível</th>
+                        <th>Ação</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                //For para percorrer dados na tabela do banco
-                for ($i = 0; $i < $total_reg; $i++) {
-                    foreach ($res[$i] as $key => $value) {
-                    }
-              
-                ?>
-                <tr>
-                    <td><?php echo $res[$i]['nome']?></td>
-                    <td><?php echo $res[$i]['cpf']?></td>
-                    <td><?php echo $res[$i]['email']?></td>
-                    <td><?php echo $res[$i]['senha']?></td>
-                    <td><?php echo $res[$i]['nivel']?></td>
-                    <td><i class="bi bi-pencil-square text-primary"></i>
-                  <i class="bi bi-archive text-danger"></i></td>
-                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    //For para percorrer dados na tabela do banco
+                    for ($i = 0; $i < $total_reg; $i++) {
+                        foreach ($res[$i] as $key => $value) {
+                        }
 
-                </tr>
-                <?php  } ?>
-            </tbody>
+                    ?>
+                        <tr>
+                            <td><?php echo $res[$i]['nome'] ?></td>
+                            <td><?php echo $res[$i]['cpf'] ?></td>
+                            <td><?php echo $res[$i]['email'] ?></td>
+                            <td><?php echo $res[$i]['senha'] ?></td>
+                            <td><?php echo $res[$i]['nivel'] ?></td>
+                            <td>
 
-        </table>
-                </small>
+                                <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar Registro">
+                                    <i class="bi bi-pencil-square text-primary"></i>
+                                </a>
+
+                                <i class="bi bi-archive text-danger"></i>
+
+                            </td>
+                        </tr>
+
+                    <?php  } ?>
+                </tbody>
+
+            </table>
+        </small>
     <?php } else {
         echo '<p>Não existem dados para serem exibidos</p>';
     } ?>
 </div>
+
+<?php
+//EDITAR
+if (@$_GET['funcao'] == 'editar') {
+    $tipo_modal = 'Editar Registro';
+
+    $query = $pdo->query("SELECT * FROM usuarios WHERE id = '$_GET[id]'");
+    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+    $total_reg = @count($res);
+    if ($total_reg > 0) {
+        $nome = $res[0]['nome'];
+        $cpf = $res[0]['cpf'];
+        $senha = $res[0]['senha'];
+        $email = $res[0]['email'];
+        $nivel = $res[0]['nivel'];
+        $id = $res[0]['id'];
+    }
+} else {
+    $tipo_modal = 'Inserir Registro';
+}
+?>
 <div class="modal" tabindex="-1" id="modalCadastrar">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Inserir Registro</h5>
+                <h5 class="modal-title"><?php echo $tipo_modal ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" id="form">
@@ -80,19 +109,19 @@ require_once('../conexao.php');
 
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo @$email ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Senha</label>
-                        <input type="text" class="form-control" id="senha" name="senha" placeholder="Senha">
+                        <input type="text" class="form-control" id="senha" name="senha" placeholder="Senha" value="<?php echo @$senha ?>">
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Nível</label>
                         <select class="form-select mt-1" aria-label="Default select example" name="nivel">
 
-                            <option <?php if (@$nivel_ed == 'Operador') { ?> selected <?php } ?> value="Operador">Operador</option>
-                            <option <?php if (@$nivel_ed == 'Administrador') { ?> selected <?php } ?> value="Administrador">Administrador</option>
-                            <option <?php if (@$nivel_ed == 'Tesoureiro') { ?> selected <?php } ?> value="Tesoureiro">Tesoureiro</option>
+                            <option <?php if (@$nivel == 'Operador') { ?> selected <?php } ?> value="Operador">Operador</option>
+                            <option <?php if (@$nivel == 'Administrador') { ?> selected <?php } ?> value="Administrador">Administrador</option>
+                            <option <?php if (@$nivel == 'Tesoureiro') { ?> selected <?php } ?> value="Tesoureiro">Tesoureiro</option>
                         </select>
                     </div>
                     <small class="mt-1">
@@ -102,9 +131,15 @@ require_once('../conexao.php');
                     </small>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-fechar">Fechar</button>
-                    <button type="submit" class="btn btn-primary" name="btn-salvar" id="btn-salvar">Salvar</button>
-                </div>
+					<button type="button" id="btn-fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+					<button name="btn-salvar" id="btn-salvar" type="submit" class="btn btn-primary">Salvar</button>
+
+					<input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
+
+					<input name="cpf_antigo" type="hidden" value="<?php echo @$cpf ?>">
+					<input name="email_antigo" type="hidden" value="<?php echo @$email ?>">
+
+				</div>
             </form>
         </div>
     </div>
@@ -121,6 +156,15 @@ if (@$_GET['funcao'] == "novo") { ?>
     </script>
 <?php } ?>
 
+<?php
+if (@$_GET['funcao'] == "editar") { ?>
+    <script type="text/javascript">
+        var myModal = new bootstrap.Modal(document.getElementById('modalCadastrar'), {
+            backdrop: 'static'
+        })
+        myModal.show();
+    </script>
+<?php } ?>
 
 <!--AJAX PARA INSERÇÃO E EDIÇÃO DOS DADOS COM IMAGEM -->
 <script type="text/javascript">
@@ -143,7 +187,7 @@ if (@$_GET['funcao'] == "novo") { ?>
                     //$('#nome').val('');
                     //$('#cpf').val('');
                     $('#btn-fechar').click();
-                    //   window.location = "index.php?pag="+pag;
+                    window.location = "index.php?pagina=" + pag;
 
                 } else {
 
