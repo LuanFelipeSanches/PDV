@@ -7,9 +7,9 @@ require_once('../conexao.php');
 <a href="index.php?pagina=<?php echo $pag ?>&funcao=novo" type="button" class="btn btn-secondary mt-2">Novo Usuário</a>
 
 <div class="mt-4" style="margin-right: 25px;">
-  
+
     <?php
-      //BUSCAR
+    //BUSCAR
     $query = $pdo->query("SELECT * FROM usuarios ORDER BY id DESC");
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
     $total_reg = @count($res);
@@ -47,9 +47,9 @@ require_once('../conexao.php');
                                 <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar Registro">
                                     <i class="bi bi-pencil-square text-primary"></i>
                                 </a>
-
-                                <i class="bi bi-archive text-danger"></i>
-
+                                <a href="index.php?pagina=<?php echo $pag ?>&funcao=deletar&id=<?php echo $res[$i]['id'] ?>" title="Excluir Registro">
+                                    <i class="bi bi-archive text-danger"></i>
+                                </a>
                             </td>
                         </tr>
 
@@ -83,6 +83,8 @@ if (@$_GET['funcao'] == 'editar') {
     $tipo_modal = 'Inserir Registro';
 }
 ?>
+<!--Modal Cadastrar -->
+
 <div class="modal" tabindex="-1" id="modalCadastrar">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -131,19 +133,56 @@ if (@$_GET['funcao'] == 'editar') {
                     </small>
                 </div>
                 <div class="modal-footer">
-					<button type="button" id="btn-fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-					<button name="btn-salvar" id="btn-salvar" type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" id="btn-fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button name="btn-salvar" id="btn-salvar" type="submit" class="btn btn-primary">Salvar</button>
 
-					<input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
+                    <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
 
-					<input name="cpf_antigo" type="hidden" value="<?php echo @$cpf ?>">
-					<input name="email_antigo" type="hidden" value="<?php echo @$email ?>">
+                    <input name="cpf_antigo" type="hidden" value="<?php echo @$cpf ?>">
+                    <input name="email_antigo" type="hidden" value="<?php echo @$email ?>">
 
-				</div>
+                </div>
             </form>
         </div>
     </div>
 </div>
+<!--Modal Cadastrar Fim -->
+
+
+<!--Modal Deletar -->
+
+<div class="modal fade" tabindex="-1" id="modalDeletar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Excluir Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" id="form-excluir">
+                <div class="modal-body">
+
+                    <p>Deseja Realmente Excluir o Registro?</p>
+
+                    <small>
+                        <div align="center" class="mt-1" id="mensagem-excluir">
+
+                        </div>
+                    </small>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button name="btn-excluir" id="btn-excluir" type="submit" class="btn btn-danger">Excluir</button>
+
+                    <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Modal Deletar Fim -->
 
 
 <?php
@@ -162,6 +201,15 @@ if (@$_GET['funcao'] == "editar") { ?>
         var myModal = new bootstrap.Modal(document.getElementById('modalCadastrar'), {
             backdrop: 'static'
         })
+        myModal.show();
+    </script>
+<?php } ?>
+
+
+<?php
+if (@$_GET['funcao'] == "deletar") { ?>
+    <script type="text/javascript">
+        var myModal = new bootstrap.Modal(document.getElementById('modalDeletar'), {})
         myModal.show();
     </script>
 <?php } ?>
@@ -214,6 +262,46 @@ if (@$_GET['funcao'] == "editar") { ?>
     });
 </script>
 
+
+<!--AJAX PARA EXCLUIR DADOS -->
+<script type="text/javascript">
+    $("#form-excluir").submit(function() {
+        var pag = "<?= $pag ?>";
+        event.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: pag + "/excluir.php",
+            type: 'POST',
+            data: formData,
+
+            success: function(mensagem) {
+
+                $('#mensagem').removeClass()
+
+                if (mensagem.trim() == "Excluído com Sucesso!") {
+
+                    $('#mensagem-excluir').addClass('text-success')
+
+                    $('#btn-fechar').click();
+                    window.location = "index.php?pagina=" + pag;
+
+                } else {
+
+                    $('#mensagem-excluir').addClass('text-danger')
+                }
+
+                $('#mensagem-excluir').text(mensagem)
+
+            },
+
+            cache: false,
+            contentType: false,
+            processData: false,
+
+        });
+    });
+</script>
 
 <script type="text/javascript">
     $('#example').dataTable({
