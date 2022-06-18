@@ -13,6 +13,7 @@ require_once('../conexao.php');
     $total_reg = @count($res);
     if ( $total_reg > 0) {
     ?>
+     <small>
         <table id="example" class="table table-hover my-4">
             <thead>
                 <tr>
@@ -39,7 +40,8 @@ require_once('../conexao.php');
                     <td><?php echo $res[$i]['email']?></td>
                     <td><?php echo $res[$i]['senha']?></td>
                     <td><?php echo $res[$i]['nivel']?></td>
-                    <td><i class="bi bi-pencil-square"></i></td>
+                    <td><i class="bi bi-pencil-square text-primary"></i>
+                  <i class="bi bi-archive text-danger"></i></td>
                     
 
                 </tr>
@@ -47,6 +49,7 @@ require_once('../conexao.php');
             </tbody>
 
         </table>
+                </small>
     <?php } else {
         echo '<p>Não existem dados para serem exibidos</p>';
     } ?>
