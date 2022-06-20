@@ -1,1 +1,4 @@
-Pagina Home
+<?php
+@session_start();
+
+?>

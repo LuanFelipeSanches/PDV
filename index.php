@@ -39,16 +39,16 @@ require_once("conexao.php")
 				<span class="login100-form-title p-b-41">
 				<?php echo $nome_sistema ?>
 				</span>
-				<form class="login100-form validate-form p-b-33 p-t-5">
+				<form class="login100-form validate-form p-b-33 p-t-5" method="POST" action="autenticar.php">
 
 					<div class="wrap-input100 validate-input" data-validate = "Email ou CPF">
-						<input class="input100" type="text" name="usuario" placeholder= "Email ou CPF">
+						<input class="input100" type="text" name="usuario" placeholder= "Email ou CPF" required>
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Senha">
-						<input class="input100" type="password" name="senha" placeholder="Senha">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+						<input class="input100" type="password" name="senha" placeholder="Senha" required>
+						<span class="focus-input100" data-placeholder="&#xe80f;" ></span>
 					</div>
 
 					<div class="container-login100-form-btn m-t-32">

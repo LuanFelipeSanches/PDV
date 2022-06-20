@@ -1,6 +1,6 @@
 <?php
 require_once('../config.php');
-
+@session_start();
 //Variaveis do menu Administrativo
 $menu1 = 'home';
 $menu2 = 'usuarios';
@@ -66,7 +66,7 @@ $menu2 = 'usuarios';
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Administrador
+                                    <?php echo $_SESSION['nome_usuario'] ?>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="#">Editar Perfil</a></li>

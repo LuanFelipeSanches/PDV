@@ -68,10 +68,7 @@ require_once('../conexao.php');
 if (@$_GET['funcao'] == 'editar') {
     $tipo_modal = 'Editar Registro';
 
-    $query = $pdo->query("SELECT * FROM usuarios WHERE id = '$_GET[id]'");
-    $res = $query->fetchAll(PDO::FETCH_ASSOC);
-    $total_reg = @count($res);
-    if ($total_reg > 0) {
+c
         $nome = $res[0]['nome'];
         $cpf = $res[0]['cpf'];
         $senha = $res[0]['senha'];
