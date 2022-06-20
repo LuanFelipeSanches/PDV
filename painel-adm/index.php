@@ -1,9 +1,27 @@
 <?php
-require_once('../config.php');
+
 @session_start();
-//Variaveis do menu Administrativo
+require_once('../conexao.php');
+require_once('verificar-permissao.php');
+
+
+//VARIAVEIS DO MENU ADMINISTRATIVO
 $menu1 = 'home';
 $menu2 = 'usuarios';
+$menu3 = 'fornecedores';
+$menu4 = 'categorias';
+
+//RECUPERAR DADOS DO USUÁRIO
+$query = $pdo->query("SELECT * from usuarios WHERE id = '$_SESSION[id_usuario]'");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$nome_usu = $res[0]['nome'];
+$email_usu = $res[0]['email'];
+$senha_usu = $res[0]['senha'];
+$nivel_usu = $res[0]['nivel'];
+$cpf_usu = $res[0]['cpf'];
+$id_usu = $res[0]['id'];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -73,7 +91,7 @@ $menu2 = 'usuarios';
                                     <li>
                                         <hr class="dropdown-divider" />
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Sair</a></li>
+                                    <li><a class="dropdown-item" href="../logout.php">Sair</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -97,5 +115,71 @@ $menu2 = 'usuarios';
 </body>
 
 </html>
+
+<div class="modal fade" tabindex="-1" id="modalPerfil" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" id="form-perfil">
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nome-perfil" name="nome-perfil" placeholder="Nome" required="" value="<?php echo @$nome_usu ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">CPF</label>
+                                <input type="text" class="form-control" id="cpf-perfil" name="cpf-perfil" placeholder="CPF" required="" value="<?php echo @$cpf_usu ?>">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email-perfil" name="email-perfil" placeholder="Email" required="" value="<?php echo @$email_usu ?>">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Senha</label>
+                        <input type="text" class="form-control" id="senha-perfil" name="senha-perfil" placeholder="Senha" required="" value="<?php echo @$senha_usu ?>">
+                    </div>
+
+
+
+                    <small>
+                        <div align="center" class="mt-1" id="mensagem-perfil">
+
+                        </div>
+                    </small>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-fechar-perfil" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button name="btn-salvar-perfil" id="btn-salvar-perfil" type="submit" class="btn btn-primary">Salvar</button>
+
+                    <input name="id-perfil" type="hidden" value="<?php echo @$id_usu ?>">
+
+                    <input name="antigo-perfil" type="hidden" value="<?php echo @$cpf_usu ?>">
+                    <input name="antigo2-perfil" type="hidden" value="<?php echo @$email_usu ?>">
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 <script type="text/javascript" src="../vendor/js/mascara.js"></script>

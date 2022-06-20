@@ -1,6 +1,9 @@
 <?php
-$pag = 'usuarios';
+
+@session_start();
 require_once('../conexao.php');
+require_once('verificar-permissao.php');
+$pag = 'usuarios';
 ?>
 
 
