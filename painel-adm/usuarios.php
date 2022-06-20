@@ -71,7 +71,6 @@ $pag = 'usuarios';
 if (@$_GET['funcao'] == 'editar') {
     $tipo_modal = 'Editar Registro';
 
-c
         $nome = $res[0]['nome'];
         $cpf = $res[0]['cpf'];
         $senha = $res[0]['senha'];
@@ -79,7 +78,7 @@ c
         $nivel = $res[0]['nivel'];
         $id = $res[0]['id'];
     }
-} else {
+ else {
     $tipo_modal = 'Inserir Registro';
 }
 ?>

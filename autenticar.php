@@ -1,35 +1,41 @@
-<?php
+<?php 
 require_once("conexao.php");
 @session_start();
 
-$usuario = $_POST["usuario"];
-$senha = $_POST["senha"];
+$usuario = $_POST['usuario'];
+$senha = $_POST['senha'];
 
-$query_con = $pdo->prepare("SELECT * FROM usuarios WHERE (email = :usuario OR cpf = :usuario) AND senha = :senha");
-$query_con->bindValue(":usuario", $usuario);
-$query_con->bindValue(":senha", $senha);
-$query_con->execute();
-$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+$query_con = $pdo->prepare("SELECT * from usuarios WHERE (email = :usuario or cpf = :usuario) and senha = :senha");
+	$query_con->bindValue(":usuario", $usuario);
+	$query_con->bindValue(":senha", $senha);
+	$query_con->execute();
+	$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
 
-if (@count($res_con) > 0) {
-    $nivel = $res_con[0]['nivel'];
+	if(@count($res_con) > 0){
+		$nivel = $res_con[0]['nivel'];
 
-    $_SESSION['nome_usuario'] = $res_con[0]['nome_usuario'];
-    $_SESSION['nivel'] = $res_con[0]['nivel'];
-    $_SESSION['cpf'] = $res_con[0]['cpf'];
+		$_SESSION['nome_usuario'] = $res_con[0]['nome'];
+		$_SESSION['nivel_usuario'] = $res_con[0]['nivel'];
+		$_SESSION['cpf_usuario'] = $res_con[0]['cpf'];
+		$_SESSION['id_usuario'] = $res_con[0]['id'];
 
-    if ($nivel == 'Administrador') {
-        echo "<script language='javascript'>window.location='painel-adm'</script>";
-    }
-    if ($nivel == 'Operador') {
-        echo "<script language='javascript'>window.location='painel-operador'</script>";
-    }
-    if ($nivel == 'Tesoureiro') {
-        echo "<script language='javascript'>window.location='painel-tesoureiro'</script>";
-    }
-} else {
 
-    echo "<script language='javascript'>window.alert('Dados Incorretos!')</script>";
+		if($nivel == 'Administrador'){
+			echo "<script language='javascript'>window.location='painel-adm'</script>";
+		}
 
-    echo "<script language='javascript'>window.location='index.php'</script>";
-}
+		if($nivel == 'Operador'){
+			echo "<script language='javascript'>window.location='painel-operador'</script>";
+		}
+
+		if($nivel == 'Tesoureiro'){
+			echo "<script language='javascript'>window.location='painel-tesoureiro'</script>";
+		}
+	}else{
+
+		echo "<script language='javascript'>window.alert('Dados Incorretos!')</script>";
+
+		echo "<script language='javascript'>window.location='index.php'</script>";
+	}
+
+ ?>
