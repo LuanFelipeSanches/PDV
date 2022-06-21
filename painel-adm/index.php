@@ -12,7 +12,7 @@ $menu3 = 'fornecedores';
 $menu4 = 'categorias';
 
 //RECUPERAR DADOS DO USUÁRIO
-$query = $pdo->query("SELECT * from usuarios WHERE id = '$_SESSION[id_usuario]'");
+$query = $pdo->query("SELECT * FROM usuarios WHERE id = '$_SESSION[id_usuario]'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $nome_usu = $res[0]['nome'];
 $email_usu = $res[0]['email'];
