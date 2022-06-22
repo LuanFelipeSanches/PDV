@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 @session_start();
 require_once('../conexao.php');
@@ -10,6 +10,7 @@ $menu1 = 'home';
 $menu2 = 'usuarios';
 $menu3 = 'fornecedores';
 $menu4 = 'categorias';
+$menu5 = 'produtos';
 
 //RECUPERAR DADOS DO USUÁRIO
 $query = $pdo->query("SELECT * FROM usuarios WHERE id = '$_SESSION[id_usuario]'");
@@ -21,9 +22,10 @@ $nivel_usu = $res[0]['nivel'];
 $cpf_usu = $res[0]['cpf'];
 $id_usu = $res[0]['id'];
 
- ?>
+?>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Painel Administrativo</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -32,102 +34,102 @@ $id_usu = $res[0]['id'];
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="../vendor/DataTables/datatables.min.css"/>
- 
+	<link rel="stylesheet" type="text/css" href="../vendor/DataTables/datatables.min.css" />
+
 	<script type="text/javascript" src="../vendor/DataTables/datatables.min.js"></script>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 	<link rel="shortcut icon" href="../img/favicon.ico" />
-	
+
 
 </head>
+
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.php">
-    	<img src="../img/logo-texto-escuro.png" width="100">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php?pagina=<?php echo $menu1 ?>">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="index.php?pagina=<?php echo $menu2 ?>">Usuários</a>
-        </li>
-         <li class="nav-item">
-          <a class="nav-link" href="index.php?pagina=<?php echo $menu3 ?>">Fornecedores</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Produtos
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Cadastro de Produtos</a></li>
-            <li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu4 ?>">Cadastro de Categorias</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        
-      </ul>
-      <div class="d-flex mx-3">
-        <img src="../img/icone-user.png" width="40px" height="40px">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <?php echo $nome_usu ?>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modalPerfil">Editar Perfil</a></li>
-             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="../logout.php">Sair</a></li>
-            
-          </ul>
-        </li>
-      </ul>
-    </div>
-       </div>
-    </div>
-  </div>
-</nav>
+		<div class="container-fluid">
+			<a class="navbar-brand" href="index.php">
+				<img src="../img/logo-texto-escuro.png" width="100">
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="index.php?pagina=<?php echo $menu1 ?>">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="index.php?pagina=<?php echo $menu2 ?>">Usuários</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="index.php?pagina=<?php echo $menu3 ?>">Fornecedores</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Produtos
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu5 ?>">Cadastro de Produtos</a></li>
+							<li><a class="dropdown-item" href="index.php?pagina=<?php echo $menu4 ?>">Cadastro de Categorias</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="#">Something else here</a></li>
+						</ul>
+					</li>
 
-<div class="container-fluid mt-2 mx-3">
-<?php 
+				</ul>
+				<div class="d-flex mx-3">
+					<img src="../img/icone-user.png" width="40px" height="40px">
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+						<ul class="navbar-nav">
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<?php echo $nome_usu ?>
+								</a>
+								<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+									<li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modalPerfil">Editar Perfil</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="../logout.php">Sair</a></li>
 
-if(@$_GET['pagina'] == $menu1){
-	require_once($menu1. '.php');
-}
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
 
-else if(@$_GET['pagina'] == $menu2){
-	require_once($menu2. '.php');
-}
+	<div class="container-fluid mt-2 mx-3">
+		<?php
 
-else if(@$_GET['pagina'] == $menu3){
-	require_once($menu3. '.php');
-}
+		if (@$_GET['pagina'] == $menu1) {
+			require_once($menu1 . '.php');
+		} else if (@$_GET['pagina'] == $menu2) {
+			require_once($menu2 . '.php');
+		} else if (@$_GET['pagina'] == $menu3) {
+			require_once($menu3 . '.php');
+		} else if (@$_GET['pagina'] == $menu4) {
+			require_once($menu4 . '.php');
+		} else if (@$_GET['pagina'] == $menu5) {
+			require_once($menu5 . '.php');
+		} else {
+			require_once($menu1 . '.php');
+		}
 
-else if(@$_GET['pagina'] == $menu4){
-	require_once($menu4. '.php');
-}
-
-else{
-	require_once($menu1. '.php');
-}
-
- ?>
-</div>
+		?>
+	</div>
 
 </body>
+
 </html>
 
 
@@ -148,35 +150,37 @@ else{
 							<div class="mb-3">
 								<label for="exampleFormControlInput1" class="form-label">Nome</label>
 								<input type="text" class="form-control" id="nome-perfil" name="nome-perfil" placeholder="Nome" required="" value="<?php echo @$nome_usu ?>">
-							</div> 
+							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="mb-3">
 								<label for="exampleFormControlInput1" class="form-label">CPF</label>
 								<input type="text" class="form-control" id="cpf-perfil" name="cpf-perfil" placeholder="CPF" required="" value="<?php echo @$cpf_usu ?>">
-							</div>  
+							</div>
 						</div>
 					</div>
 
 
 
-					
+
 
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">Email</label>
 						<input type="email" class="form-control" id="email-perfil" name="email-perfil" placeholder="Email" required="" value="<?php echo @$email_usu ?>">
-					</div>  
+					</div>
 
 					<div class="mb-3">
 						<label for="exampleFormControlInput1" class="form-label">Senha</label>
 						<input type="text" class="form-control" id="senha-perfil" name="senha-perfil" placeholder="Senha" required="" value="<?php echo @$senha_usu ?>">
-					</div>  
+					</div>
 
-					
 
-					<small><div align="center" class="mt-1" id="mensagem-perfil">
-						
-					</div> </small>
+
+					<small>
+						<div align="center" class="mt-1" id="mensagem-perfil">
+
+						</div>
+					</small>
 
 				</div>
 				<div class="modal-footer">
@@ -208,8 +212,8 @@ else{
 
 <!--AJAX PARA INSERÇÃO E EDIÇÃO DOS DADOS COM IMAGEM -->
 <script type="text/javascript">
-	$("#form-perfil").submit(function () {
-		
+	$("#form-perfil").submit(function() {
+
 		event.preventDefault();
 		var formData = new FormData(this);
 
@@ -218,39 +222,38 @@ else{
 			type: 'POST',
 			data: formData,
 
-			success: function (mensagem) {
+			success: function(mensagem) {
 
 				$('#mensagem-perfil').removeClass()
 
 				if (mensagem.trim() == "Salvo com Sucesso!") {
 
-                    //$('#nome').val('');
-                    //$('#cpf').val('');
-                    $('#btn-fechar-perfil').click();
-                    //window.location = "index.php?pagina="+pag;
+					//$('#nome').val('');
+					//$('#cpf').val('');
+					$('#btn-fechar-perfil').click();
+					//window.location = "index.php?pagina="+pag;
 
-                } else {
+				} else {
 
-                	$('#mensagem-perfil').addClass('text-danger')
-                }
+					$('#mensagem-perfil').addClass('text-danger')
+				}
 
-                $('#mensagem-perfil').text(mensagem)
+				$('#mensagem-perfil').text(mensagem)
 
-            },
+			},
 
-            cache: false,
-            contentType: false,
-            processData: false,
-            xhr: function () {  // Custom XMLHttpRequest
-            	var myXhr = $.ajaxSettings.xhr();
-                if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
-                	myXhr.upload.addEventListener('progress', function () {
-                		/* faz alguma coisa durante o progresso do upload */
-                	}, false);
-                }
-                return myXhr;
-            }
-        });
+			cache: false,
+			contentType: false,
+			processData: false,
+			xhr: function() { // Custom XMLHttpRequest
+				var myXhr = $.ajaxSettings.xhr();
+				if (myXhr.upload) { // Avalia se tem suporte a propriedade upload
+					myXhr.upload.addEventListener('progress', function() {
+						/* faz alguma coisa durante o progresso do upload */
+					}, false);
+				}
+				return myXhr;
+			}
+		});
 	});
 </script>
-
